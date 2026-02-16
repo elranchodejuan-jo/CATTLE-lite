@@ -1,18 +1,149 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>CATTLE Lite</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Rancho JB - Registro Ganadero</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>🐄 CATTLE Lite</h1>
+<header>
+    <h1>Rancho JB - Sistema de Registro Ganadero</h1>
+    <p>Balao, Guayas – Ecuador</p>
+</header>
 
-  <button id="scanBtn">📡 Leer arete NFC</button>
+<section class="form-section">
+    <h2>Registrar Nuevo Animal</h2>
 
-  <div id="result"></div>
+    <form id="animalForm">
 
-  <script src="app.js"></script>
+        <div class="form-group">
+            <label>Categoría</label>
+            <select id="categoria" required>
+                <option value="">Seleccionar</option>
+                <option value="1">Vaca / Reemplazo</option>
+                <option value="2">Ternero/a</option>
+                <option value="3">Toro</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Fecha de Nacimiento</label>
+            <input type="date" id="fechaNacimiento" required>
+        </div>
+
+        <div class="form-group">
+            <label>Código Único (Auto)</label>
+            <input type="text" id="codigo" readonly>
+        </div>
+
+        <div class="form-group">
+    <label>Nombre (opcional)</label>
+    <input type="text" id="nombre" placeholder="Ej: La Consentida">
+</div>
+
+
+        <div class="form-group">
+            <label>Sexo</label>
+            <select id="sexo" required>
+                <option value="">Seleccionar</option>
+                <option value="Hembra">Hembra</option>
+                <option value="Macho">Macho</option>
+            </select>
+        </div>
+
+        <!-- RAZA / CRUCE -->
+        <div class="form-group">
+            <label>Raza / Cruce</label>
+            <select id="raza" required>
+                <option value="">Seleccionar</option>
+                <option>Gyr</option>
+                <option>Holstein</option>
+                <option>Gyr Holandés</option>
+                <option>Brown Swiss</option>
+                <option>Brahman</option>
+                <option>Jersey</option>
+                <option>Girolando</option>
+                <option>Simmental</option>
+                <option>Normando</option>
+                <option>Charolais</option>
+                <option>Nelore</option>
+                <option>Angus</option>
+                <option>Romosinuano</option>
+                <option>Senepol</option>
+                <option>Criollo</option>
+                <option>Mestizo</option>
+            </select>
+        </div>
+
+        <!-- COLOR -->
+        <div class="form-group">
+            <label>Color</label>
+            <select id="color" required>
+                <option value="">Seleccionar</option>
+                <option>Manchada</option>
+                <option>Negra</option>
+                <option>Roja</option>
+                <option>Josca</option>
+                <option>Blanca</option>
+                <option>Barcina</option>
+                <option>Pinta Roja</option>
+                <option>Pinta Negra</option>
+                <option>Café</option>
+                <option>Gris</option>
+                <option>Overa</option>
+                <option>Amarilla</option>
+                <option>Moteada</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Código Madre</label>
+            <input type="text" id="madre">
+        </div>
+
+        <div class="form-group">
+            <label>Código Padre</label>
+            <input type="text" id="padre">
+        </div>
+
+        <!-- OBSERVACIONES -->
+        <div class="form-group">
+            <label>Observaciones</label>
+            <textarea id="observaciones" rows="3" placeholder="Notas técnicas, estado corporal, particularidades..."></textarea>
+        </div>
+
+        <button type="submit">Agregar Animal</button>
+
+    </form>
+</section>
+
+<section class="table-section">
+    <h2>Registro General</h2>
+
+    <table id="tablaAnimales">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Fecha</th>
+                <th>Sexo</th>
+                <th>Raza</th>
+                <th>Color</th>
+                <th>Madre</th>
+                <th>Padre</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JS agregará filas aquí -->
+        </tbody>
+    </table>
+
+    <button id="exportarCSV">Exportar a CSV</button>
+</section>
+
+<script src="app.js"></script>
 </body>
 </html>
