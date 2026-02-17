@@ -108,7 +108,7 @@ button {
     border-radius: 8px;
     font-size: 15px;
     font-weight: bold;
-    background: linear-gradient(135deg, #198754, #145c32);
+    background: linear-gradient(135deg, #198754, #88a30c);
     color: white;
     cursor: pointer;
     transition: 0.3s;
