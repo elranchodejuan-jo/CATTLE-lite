@@ -182,3 +182,70 @@ h3 {
     opacity: 1;
     text-align: center;
 }
+
+/* ===== RESPONSIVE AVANZADO ===== */
+
+/* Contenedor general más elegante */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Limitar ancho en pantallas grandes */
+section {
+    width: 100%;
+    max-width: 500px;
+}
+
+/* ===== TABLET (md ≥ 768px) ===== */
+@media (min-width: 768px) {
+
+    section {
+        max-width: 700px;
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    table {
+        font-size: 15px;
+    }
+}
+
+/* ===== LAPTOP (lg ≥ 1024px) ===== */
+@media (min-width: 1024px) {
+
+    section {
+        max-width: 900px;
+    }
+
+    .form-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-section h2,
+    .form-section form {
+        grid-column: span 2;
+    }
+}
+
+/* ===== PANTALLAS GRANDES (xl ≥ 1440px) ===== */
+@media (min-width: 1440px) {
+
+    section {
+        max-width: 1100px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    button {
+        font-size: 18px;
+    }
+}
