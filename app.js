@@ -7,19 +7,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const tabla = document.querySelector("#tablaAnimales tbody");
     const exportarBtn = document.getElementById("exportarCSV");
 
-    let contadorDiario = {};
+    // Ahora el contador será por GRUPO + FECHA
+    let contadorRegistro = {};
 
-    // Fecha automática hoy (editable)
+    // Fecha automática hoy
     const hoy = new Date().toISOString().split("T")[0];
     fechaInput.value = hoy;
 
-    // Generador de código
+    // ===== GENERADOR DE CÓDIGO =====
     function generarCodigo() {
 
-        const categoria = categoriaInput.value;
+        const grupo = categoriaInput.value;
         const fecha = fechaInput.value;
 
-        if (!categoria || !fecha) {
+        if (!grupo || !fecha) {
             codigoInput.value = "";
             return;
         }
@@ -30,35 +31,73 @@ document.addEventListener("DOMContentLoaded", function () {
         const mes = String(fechaObj.getMonth() + 1).padStart(2, "0");
         const dia = String(fechaObj.getDate()).padStart(2, "0");
 
-        const claveFecha = año + mes + dia;
+        const prefijo = grupo + año + mes + dia;
 
-        if (!contadorDiario[claveFecha]) {
-            contadorDiario[claveFecha] = 1;
+        if (!contadorRegistro[prefijo]) {
+            contadorRegistro[prefijo] = 1;
         }
 
-        const consecutivo = String(contadorDiario[claveFecha]).padStart(2, "0");
+        let contadorActual = contadorRegistro[prefijo];
 
-        const codigoFinal = categoria + año + mes + dia + consecutivo;
-        codigoInput.value = codigoFinal;
+        // Hasta 99 muestra 2 dígitos, desde 100 muestra 3
+        let contadorFormateado =
+            contadorActual < 100
+                ? String(contadorActual).padStart(2, "0")
+                : String(contadorActual).padStart(3, "0");
+
+        codigoInput.value = prefijo + contadorFormateado;
     }
 
     categoriaInput.addEventListener("change", generarCodigo);
     fechaInput.addEventListener("change", generarCodigo);
 
-    // Agregar animal
+    // ===== REGISTRAR ANIMAL =====
     form.addEventListener("submit", function (e) {
         e.preventDefault();
+
+        const grupo = categoriaInput.value;
+        const fecha = fechaInput.value;
+
+        const ccSeleccionado = document.querySelector('input[name="cc"]:checked');
+
+        if (!ccSeleccionado) {
+            alert("Selecciona la Condición Corporal (1-5).");
+            return;
+        }
+
+        const cc = ccSeleccionado.value;
+
+        const fechaObj = new Date(fecha);
+        const año = fechaObj.getFullYear().toString().slice(-2);
+        const mes = String(fechaObj.getMonth() + 1).padStart(2, "0");
+        const dia = String(fechaObj.getDate()).padStart(2, "0");
+
+        const prefijo = grupo + año + mes + dia;
+
+        if (!contadorRegistro[prefijo]) {
+            contadorRegistro[prefijo] = 1;
+        }
+
+        let contadorActual = contadorRegistro[prefijo];
+
+        let contadorFormateado =
+            contadorActual < 100
+                ? String(contadorActual).padStart(2, "0")
+                : String(contadorActual).padStart(3, "0");
+
+        const codigoFinal = prefijo + contadorFormateado;
 
         const categoriaTexto = categoriaInput.options[categoriaInput.selectedIndex].text;
 
         const datos = [
-            codigoInput.value,
+            codigoFinal,
             document.getElementById("nombre").value,
             categoriaTexto,
-            fechaInput.value,
+            fecha,
             document.getElementById("sexo").value,
             document.getElementById("raza").value,
             document.getElementById("color").value,
+            cc,
             document.getElementById("madre").value,
             document.getElementById("padre").value,
             document.getElementById("observaciones").value
@@ -74,21 +113,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         tabla.appendChild(fila);
 
-        // Aumentar contador SOLO cuando se registra realmente
-        const fechaObj = new Date(fechaInput.value);
-        const año = fechaObj.getFullYear().toString().slice(-2);
-        const mes = String(fechaObj.getMonth() + 1).padStart(2, "0");
-        const dia = String(fechaObj.getDate()).padStart(2, "0");
-        const claveFecha = año + mes + dia;
-
-        contadorDiario[claveFecha]++;
+        // Incrementar contador después de registrar
+        contadorRegistro[prefijo]++;
 
         form.reset();
         fechaInput.value = hoy;
         codigoInput.value = "";
     });
 
-    // Exportar CSV
+    // ===== EXPORTAR CSV =====
     exportarBtn.addEventListener("click", function () {
 
         let csv = [];
@@ -112,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const a = document.createElement("a");
         a.href = url;
-        a.download = "registro_ganadero.csv";
+        a.download = "Registro Ganadero.csv";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

@@ -38,10 +38,9 @@
         </div>
 
         <div class="form-group">
-    <label>Nombre (opcional)</label>
-    <input type="text" id="nombre" placeholder="Ej: La Consentida">
-</div>
-
+            <label>Nombre (opcional)</label>
+            <input type="text" id="nombre" placeholder="Ej: La Consentida">
+        </div>
 
         <div class="form-group">
             <label>Sexo</label>
@@ -52,7 +51,6 @@
             </select>
         </div>
 
-        <!-- RAZA / CRUCE -->
         <div class="form-group">
             <label>Raza / Cruce</label>
             <select id="raza" required>
@@ -76,7 +74,6 @@
             </select>
         </div>
 
-        <!-- COLOR -->
         <div class="form-group">
             <label>Color</label>
             <select id="color" required>
@@ -97,6 +94,28 @@
             </select>
         </div>
 
+        <!-- CONDICIÓN CORPORAL -->
+        <div class="form-group">
+            <label>Condición Corporal (CC)</label>
+            <div class="cc-options">
+                <input type="radio" name="cc" id="cc1" value="1">
+                <label for="cc1" class="cc-btn">1</label>
+
+                <input type="radio" name="cc" id="cc2" value="2">
+                <label for="cc2" class="cc-btn">2</label>
+
+                <input type="radio" name="cc" id="cc3" value="3">
+                <label for="cc3" class="cc-btn">3</label>
+
+                <input type="radio" name="cc" id="cc4" value="4">
+                <label for="cc4" class="cc-btn">4</label>
+
+                <input type="radio" name="cc" id="cc5" value="5">
+                <label for="cc5" class="cc-btn">5</label>
+            </div>
+            <small>1: Malo | 2: Regular | 3: Normal | 4: Óptimo | 5: Obesidad</small>
+        </div>
+
         <div class="form-group">
             <label>Código Madre</label>
             <input type="text" id="madre">
@@ -107,10 +126,9 @@
             <input type="text" id="padre">
         </div>
 
-        <!-- OBSERVACIONES -->
         <div class="form-group">
             <label>Observaciones</label>
-            <textarea id="observaciones" rows="3" placeholder="Notas técnicas, estado corporal, particularidades..."></textarea>
+            <textarea id="observaciones" rows="3" placeholder="Notas técnicas, particularidades..."></textarea>
         </div>
 
         <button type="submit">Agregar Animal</button>
@@ -131,19 +149,21 @@
                 <th>Sexo</th>
                 <th>Raza</th>
                 <th>Color</th>
+                <th>CC</th>
                 <th>Madre</th>
                 <th>Padre</th>
                 <th>Observaciones</th>
             </tr>
         </thead>
         <tbody>
-            <!-- JS agregará filas aquí -->
         </tbody>
     </table>
 
     <button id="exportarCSV">Exportar a CSV</button>
 </section>
 
+<h3>JUAN BAJAÑA  -  @elranchodejuan_jo  -  Contruyendo mi sueño poco a poco</h3>
+ 
 <script src="app.js"></script>
 </body>
 </html>
