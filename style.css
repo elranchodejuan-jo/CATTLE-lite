@@ -8,18 +8,20 @@
 body {
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     color: white;
-    padding: 15px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* HEADER */
 header {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 h1 {
-    font-size: 22px;
-    margin-bottom: 5px;
+    font-size: 20px;
 }
 
 p {
@@ -30,15 +32,17 @@ p {
 /* SECCIONES */
 section {
     background-color: rgba(0, 0, 0, 0.45);
-    padding: 18px;
-    margin-bottom: 25px;
+    padding: 16px;
+    margin-bottom: 20px;
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    width: 100%;
+    max-width: 500px;
 }
 
 /* FORMULARIO */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 14px;
     display: flex;
     flex-direction: column;
 }
@@ -46,14 +50,14 @@ section {
 label {
     margin-bottom: 6px;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 input, select, textarea {
-    padding: 10px;
+    padding: 9px;
     border-radius: 6px;
     border: none;
-    font-size: 15px;
+    font-size: 14px;
     background-color: #1e3c47;
     color: white;
 }
@@ -62,13 +66,10 @@ input:focus, select:focus, textarea:focus {
     outline: 2px solid #4cc9f0;
 }
 
-/* ===== CONDICIÓN CORPORAL (CC) ===== */
-
+/* CONDICIÓN CORPORAL */
 .cc-options {
     display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 5px;
+    gap: 6px;
 }
 
 .cc-options input[type="radio"] {
@@ -78,44 +79,34 @@ input:focus, select:focus, textarea:focus {
 .cc-btn {
     flex: 1;
     text-align: center;
-    padding: 12px 0;
+    padding: 10px 0;
     border-radius: 8px;
     border: 2px solid #198754;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
-    transition: 0.2s ease;
     background-color: #1e3c47;
     color: white;
+    transition: 0.2s;
 }
 
-/* Efecto al tocar */
 .cc-btn:active {
     transform: scale(0.95);
 }
 
-/* Cuando está seleccionado */
 .cc-options input[type="radio"]:checked + .cc-btn {
     background: linear-gradient(135deg, #20c997, #198754);
     border-color: #20c997;
-    color: white;
     box-shadow: 0 0 8px rgba(32, 201, 151, 0.8);
-}
-
-/* Texto pequeño guía */
-.form-group small {
-    margin-top: 5px;
-    font-size: 12px;
-    opacity: 0.8;
 }
 
 /* BOTONES */
 button {
     margin-top: 10px;
-    padding: 12px;
+    padding: 10px;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     background: linear-gradient(135deg, #198754, #145c32);
     color: white;
@@ -124,7 +115,6 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(135deg, #14ac7f, #0f5132);
     transform: translateY(-2px);
 }
 
@@ -136,74 +126,30 @@ button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
-    font-size: 14px;
+    margin-top: 12px;
+    font-size: 13px;
 }
 
 th, td {
     border: 1px solid rgba(255,255,255,0.3);
-    padding: 8px;
+    padding: 6px;
     text-align: center;
 }
 
 th {
     background-color: #145c32;
-    font-weight: bold;
 }
 
 tr:nth-child(even) {
     background-color: rgba(255,255,255,0.05);
 }
 
-/* RESPONSIVO MÓVIL */
-@media (max-width: 600px) {
-
-    h1 {
-        font-size: 18px;
-    }
-
-    button {
-        font-size: 14px;
-    }
-
-    table {
-        font-size: 12px;
-    }
-
-    .cc-btn {
-        font-size: 14px;
-        padding: 10px 0;
-    }
-}
-
-h3 {
-    margin-top: 5px;
-    font-size: 12px;
-    opacity: 1;
-    text-align: center;
-}
-
-/* ===== RESPONSIVE AVANZADO ===== */
-
-/* Contenedor general más elegante */
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Limitar ancho en pantallas grandes */
-section {
-    width: 100%;
-    max-width: 500px;
-}
-
-/* ===== TABLET (md ≥ 768px) ===== */
+/* ===== TABLET ≥ 768px ===== */
 @media (min-width: 768px) {
 
     section {
         max-width: 700px;
-        padding: 25px;
+        padding: 22px;
     }
 
     h1 {
@@ -215,7 +161,7 @@ section {
     }
 }
 
-/* ===== LAPTOP (lg ≥ 1024px) ===== */
+/* ===== DESKTOP ≥ 1024px ===== */
 @media (min-width: 1024px) {
 
     section {
@@ -234,73 +180,17 @@ section {
     }
 }
 
-/* ===== PANTALLAS GRANDES (xl ≥ 1440px) ===== */
-@media (min-width: 1440px) {
-
-    section {
-        max-width: 1100px;
+   .cc-btn {
+        font-size: 14px;
+        padding: 10px 0;
     }
-
-    h1 {
-        font-size: 32px;
-    }
-
-    button {
-        font-size: 18px;
-    }
+    
+    
+h3 {
+    margin-top: 5px;
+    font-size: 12px;
+    opacity: 1;
+    text-align: center;
 }
 
-/* ===== AJUSTE FINO PARA CELULARES PEQUEÑOS ===== */
-@media (max-width: 480px) {
 
-    body {
-        padding: 8px;
-    }
-
-    section {
-        padding: 14px;
-        border-radius: 10px;
-    }
-
-    h1 {
-        font-size: 16px;
-    }
-
-    h2 {
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
-
-    label {
-        font-size: 13px;
-    }
-
-    input, select, textarea {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    button {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    /* CC más compacto */
-    .cc-options {
-        gap: 6px;
-    }
-
-    .cc-btn {
-        font-size: 13px;
-        padding: 8px 0;
-    }
-
-    /* Tabla estilo tarjeta en móvil */
-    table {
-        font-size: 12px;
-    }
-
-    th, td {
-        padding: 6px;
-    }
-}
