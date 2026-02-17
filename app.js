@@ -7,12 +7,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const tabla = document.querySelector("#tablaAnimales tbody");
     const exportarBtn = document.getElementById("exportarCSV");
 
-    // Ahora el contador será por GRUPO + FECHA
+    // ===== CARGAR DATOS DESDE LOCAL STORAGE =====
+    let animales = JSON.parse(localStorage.getItem("animales")) || [];
     let contadorRegistro = {};
 
-    // Fecha automática hoy
     const hoy = new Date().toISOString().split("T")[0];
     fechaInput.value = hoy;
+
+    // ===== RECONSTRUIR TABLA Y CONTADORES =====
+    function reconstruirDesdeStorage() {
+
+        animales.forEach(animal => {
+            agregarFilaATabla(animal);
+
+            const prefijo = animal.codigo.slice(0, 7);
+            const contador = parseInt(animal.codigo.slice(7));
+
+            if (!contadorRegistro[prefijo] || contadorRegistro[prefijo] <= contador) {
+                contadorRegistro[prefijo] = contador + 1;
+            }
+        });
+    }
 
     // ===== GENERADOR DE CÓDIGO =====
     function generarCodigo() {
@@ -39,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let contadorActual = contadorRegistro[prefijo];
 
-        // Hasta 99 muestra 2 dígitos, desde 100 muestra 3
         let contadorFormateado =
             contadorActual < 100
                 ? String(contadorActual).padStart(2, "0")
@@ -50,6 +64,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
     categoriaInput.addEventListener("change", generarCodigo);
     fechaInput.addEventListener("change", generarCodigo);
+
+    // ===== AGREGAR FILA A TABLA =====
+    function agregarFilaATabla(animal) {
+
+        const fila = document.createElement("tr");
+
+        const datos = [
+            animal.codigo,
+            animal.nombre,
+            animal.categoria,
+            animal.fecha,
+            animal.sexo,
+            animal.raza,
+            animal.color,
+            animal.cc,
+            animal.madre,
+            animal.padre,
+            animal.observaciones
+        ];
+
+        datos.forEach(dato => {
+            const celda = document.createElement("td");
+            celda.textContent = dato;
+            fila.appendChild(celda);
+        });
+
+        tabla.appendChild(fila);
+    }
 
     // ===== REGISTRAR ANIMAL =====
     form.addEventListener("submit", function (e) {
@@ -64,8 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Selecciona la Condición Corporal (1-5).");
             return;
         }
-
-        const cc = ccSeleccionado.value;
 
         const fechaObj = new Date(fecha);
         const año = fechaObj.getFullYear().toString().slice(-2);
@@ -89,31 +129,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const categoriaTexto = categoriaInput.options[categoriaInput.selectedIndex].text;
 
-        const datos = [
-            codigoFinal,
-            document.getElementById("nombre").value,
-            categoriaTexto,
-            fecha,
-            document.getElementById("sexo").value,
-            document.getElementById("raza").value,
-            document.getElementById("color").value,
-            cc,
-            document.getElementById("madre").value,
-            document.getElementById("padre").value,
-            document.getElementById("observaciones").value
-        ];
+        const nuevoAnimal = {
+            codigo: codigoFinal,
+            nombre: document.getElementById("nombre").value,
+            categoria: categoriaTexto,
+            fecha: fecha,
+            sexo: document.getElementById("sexo").value,
+            raza: document.getElementById("raza").value,
+            color: document.getElementById("color").value,
+            cc: ccSeleccionado.value,
+            madre: document.getElementById("madre").value,
+            padre: document.getElementById("padre").value,
+            observaciones: document.getElementById("observaciones").value
+        };
 
-        const fila = document.createElement("tr");
+        animales.push(nuevoAnimal);
 
-        datos.forEach(dato => {
-            const celda = document.createElement("td");
-            celda.textContent = dato;
-            fila.appendChild(celda);
-        });
+        localStorage.setItem("animales", JSON.stringify(animales));
 
-        tabla.appendChild(fila);
+        agregarFilaATabla(nuevoAnimal);
 
-        // Incrementar contador después de registrar
         contadorRegistro[prefijo]++;
 
         form.reset();
@@ -153,8 +188,11 @@ document.addEventListener("DOMContentLoaded", function () {
         URL.revokeObjectURL(url);
     });
 
+    reconstruirDesdeStorage();
+
 });
 
+// ===== SERVICE WORKER =====
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("service-worker.js")
